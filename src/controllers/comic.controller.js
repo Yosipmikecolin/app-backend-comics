@@ -18,7 +18,7 @@ export const saveComic = async (req, res) => {
 
     const token = req.headers.authorization?.split(" ")[1];
     if (!token) {
-      return res.status(401).json({ message: "Token no proporcionado" });
+      return res.status(401).json({ message: "Token not provided" });
     } else {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       const userId = decoded.id; // Extraer el ID del usuario
@@ -29,7 +29,7 @@ export const saveComic = async (req, res) => {
       });
 
       res.status(201).json({
-        message: "Cómic creado exitosamente",
+        message: "Successfully created comic",
         comic: newComic,
       });
     }
@@ -37,3 +37,33 @@ export const saveComic = async (req, res) => {
     res.status(500).json({ message: `Error: ${error.message}` });
   }
 };
+
+export const getComicsByUserId = async (req, res) => {
+  try {
+    const token = req.headers.authorization?.split(" ")[1];
+    if (!token) {
+      return res.status(401).json({ message: "Token not provided" });
+    } else {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const userId = decoded.id; // Extraer el ID del usuario
+
+      const comics = await comicModel.find({ user: userId });
+
+      // Verificar si el usuario tiene cómics
+      if (comics.length === 0) {
+        return res
+          .status(404)
+          .json({ message: "No comics found for this user" });
+      }
+
+      res.status(200).json({
+        message: "Successfully Obtained Comics",
+        comics,
+      });
+    }
+  } catch (error) {
+    res.status(500).json({ message: `Error: ${error.message}` });
+  }
+};
+
+
