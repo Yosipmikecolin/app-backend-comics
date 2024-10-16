@@ -66,4 +66,22 @@ export const getComicsByUserId = async (req, res) => {
   }
 };
 
+export const deleteComic = async (req, res) => {
+  try {
+    const { id } = req.params;
 
+    const deletedComic = await comicModel.findByIdAndDelete(id);
+
+    // Verificar si se encontró el cómi
+    if (!deletedComic) {
+      return res.status(404).json({ message: "Comic not found" });
+    } else {
+      res.status(200).json({
+        message: "Comic successfully removed",
+        comic: deletedComic,
+      });
+    }
+  } catch (error) {
+    res.status(500).json({ message: `Error: ${error.message}` });
+  }
+};
