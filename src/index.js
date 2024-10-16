@@ -1,6 +1,9 @@
 import express from "express";
 import cors from "cors";
 import routeComic from "./routes/comic.route.js";
+import routeUser from "./routes/user.route.js";
+import connectDB from "./database/data.js"
+connectDB()
 
 const app = express();
 
@@ -13,6 +16,7 @@ app.use(cors());
 
 //ROUTES
 app.use("/api", routeComic);
+app.use("/api", routeUser);
 
 //SERVER
 app.listen(app.get("port"), () => {
