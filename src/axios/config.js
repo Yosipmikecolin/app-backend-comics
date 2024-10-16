@@ -1,12 +1,13 @@
 import axios from "axios";
+import dotenv from "dotenv"
+dotenv.config()
 
 export const axiosConfig = axios.create({
-  baseURL: "https://comicvine.gamespot.com/api/episodes/",
+  baseURL: "https://comicvine.gamespot.com/api/issues/",
 
   params: {
-    api_key: "fd58f9b0f45b499e227ee19c25c6cc537ad8d66a",
+    api_key: process.env.API_KEY,
     filter: "name:Batman",
-    limit: 10,
     format: "json",
   },
 });

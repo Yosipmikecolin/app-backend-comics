@@ -1,8 +1,9 @@
 import { getAllComics } from "../axios/request.js";
 
-export const getComics = async (_req, res) => {
+export const getComics = async (req, res) => {
   try {
-    const response = await getAllComics();
+    const { page } = req.params;
+    const response = await getAllComics(page);
     res.json(response.results);
   } catch (error) {
     console.log("error", error);

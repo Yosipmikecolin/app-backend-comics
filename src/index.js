@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import routeComic from "./routes/comic.route.js";
+
 const app = express();
 
 //VARS
