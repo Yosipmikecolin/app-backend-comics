@@ -53,8 +53,8 @@ export const getComicsByUserId = async (req, res) => {
       // Verificar si el usuario tiene cómics
       if (comics.length === 0) {
         return res
-          .status(404)
-          .json({ message: "No comics found for this user" });
+          .status(200)
+          .json({ message: "No comics found for this user", comics: [] });
       }
 
       res.status(200).json({
@@ -63,7 +63,7 @@ export const getComicsByUserId = async (req, res) => {
       });
     }
   } catch (error) {
-    res.status(500).json({ message: `Error: ${error.message}` });
+    res.status(400).json({ message: error.message });
   }
 };
 
